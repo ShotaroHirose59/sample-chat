@@ -13,6 +13,7 @@
           </v-list-item-subtitle>
           <v-list-item-subtitle>
             {{ comment.createdAt.toDate().toLocaleString() }}
+            <v-icon color="red" @click="deleteComment(comment.id)" small>mdi-delete</v-icon>
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -37,5 +38,13 @@ export default {
       comments: db.collection('comments').orderBy('createdAt')
     }
   },
+  methods: {
+    deleteComment(id) {
+      if (!confirm('コメントを削除してもよろしいですか？')) {
+        return
+      }
+      db.collection('comments').doc(id).delete()
+    }
+  }
 }
 </script>
